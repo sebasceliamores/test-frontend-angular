@@ -5,12 +5,11 @@ import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { ProductsListComponent } from './products/products-list.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, ProductsListComponent],
+      imports: [AppComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -26,7 +25,7 @@ describe('AppComponent', () => {
   });
 
   it('should render the brand name', () => {
-    const fixture = TestBed.createComponent(ProductsListComponent);
+    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.brand-name')?.textContent).toContain(

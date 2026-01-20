@@ -9,11 +9,10 @@ import { NgForOf, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
-
-import { ProductsService } from './products.service';
-import { Product } from './product.model';
-import { EPageSize } from './enums/products-list.enum';
-import { PAGE_SIZES_LIST } from './constants/products-list.constants';
+import { ProductsService } from '../../services/products.service';
+import { PAGE_SIZES_LIST } from '../../constants/products-list.constants';
+import { EPageSize } from '../../enums/products-list.enum';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-products-list',

@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
-import { environment } from '../../environments/environment';
-import { Product, ProductPayload, ProductsResponse } from './product.model';
+import {
+  Product,
+  ProductPayload,
+  ProductsResponse,
+} from '../models/product.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {

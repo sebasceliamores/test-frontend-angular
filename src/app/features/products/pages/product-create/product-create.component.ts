@@ -17,9 +17,8 @@ import {
 import { Router } from '@angular/router';
 import { finalize, map, of, switchMap, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-import { ProductsService } from './products.service';
-import { ProductPayload } from './product.model';
+import { ProductsService } from '../../services/products.service';
+import { ProductPayload } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-create',
