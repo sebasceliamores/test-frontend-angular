@@ -6,6 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 
@@ -17,7 +18,7 @@ import { PAGE_SIZES_LIST } from './constants/products-list.constants';
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NgForOf, NgIf],
+  imports: [NgForOf, NgIf, RouterLink],
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,16 +51,33 @@ export class ProductsListComponent {
     const filtered = query
       ? state.products.filter((product) => this.matchesQuery(product, query))
       : state.products;
+    const visible = filtered.slice(0, size);
     return {
-      products: filtered.slice(0, size),
+      products: visible,
       total: filtered.length,
+      shown: visible.length,
       pageSize: size,
       error: state.error,
     };
   });
 
+  readonly logoErrors = signal<Record<string, boolean>>({});
+
   trackById(index: number, product: Product): string {
     return product.id ?? String(index);
+  }
+
+  getLogoKey(product: Product): string {
+    return product.id || product.name;
+  }
+
+  hasLogoError(product: Product): boolean {
+    return Boolean(this.logoErrors()[this.getLogoKey(product)]);
+  }
+
+  onLogoError(product: Product): void {
+    const key = this.getLogoKey(product);
+    this.logoErrors.update((state) => ({ ...state, [key]: true }));
   }
 
   getInitials(name: string): string {

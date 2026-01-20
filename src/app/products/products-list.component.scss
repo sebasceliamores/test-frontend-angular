@@ -4,41 +4,6 @@
   background: var(--surface);
 }
 
-.top-bar {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--brand);
-}
-
-.brand-icon {
-  width: 32px;
-  height: 22px;
-  border: 2px solid var(--brand);
-  border-radius: 6px;
-  position: relative;
-}
-
-.brand-icon::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 6px;
-  border: 2px solid var(--brand);
-  border-radius: 3px;
-  left: 7px;
-  top: 5px;
-  background: transparent;
-}
-
 .panel {
   background: var(--panel);
   border-radius: 14px;
@@ -50,7 +15,9 @@
 
 .toolbar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
@@ -63,30 +30,51 @@
   background: #fff;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.add-btn {
+  background: #f6e28b;
+  color: #4a4f60;
+}
+
 .search-input:focus {
   outline: 2px solid rgba(33, 63, 117, 0.25);
   border-color: #aab3c9;
 }
 
 .table {
-  border-top: 1px solid #e6e9f2;
+  border: 1px solid #e6e9f2;
+  border-radius: 12px;
+  overflow-x: auto;
+  background: #fff;
 }
 
 .row {
   display: grid;
   grid-template-columns: 90px 1.6fr 2fr 1.1fr 1.2fr;
   gap: 12px;
-  padding: 14px 8px;
+  padding: 12px 16px;
   align-items: center;
   border-bottom: 1px solid #eef1f7;
   font-size: 14px;
   color: var(--text);
+  min-width: 760px;
 }
 
 .row.header {
   font-weight: 600;
   color: var(--muted);
-  background: #f7f9fd;
+  background: #f3f6fd;
   border-bottom: 1px solid #e6e9f2;
 }
 
@@ -101,6 +89,12 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
+}
+
+.cell-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .cell.description {
@@ -129,7 +123,8 @@
 .logo-circle img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #ffffff;
 }
 
 .info-icon {
@@ -201,16 +196,30 @@
   }
 
   .row {
-    grid-template-columns: 60px 1fr;
     row-gap: 10px;
-  }
-
-  .row.header {
-    display: none;
   }
 
   .cell {
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+  }
+
+  .cell.description {
+    order: 3;
+  }
+
+  .cell-text {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
   }
 }
