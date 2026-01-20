@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <ng-container *ngIf="vm() as data">
+      <ng-container *ngIf="productsView() as data">
         <div class="row empty" *ngIf="data.error">
           <span class="error-message">{{ data.error }}</span>
         </div>
@@ -65,6 +65,22 @@
           <span class="empty-message">No hay productos para mostrar.</span>
         </div>
       </ng-container>
+    </div>
+
+    <div class="table-footer">
+      <span class="result-count">{{ (productsView().total) }} Resultados</span>
+      <label class="page-size">
+        <span class="sr-only">Cantidad de registros</span>
+        <select #pageSize (change)="onPageSizeChange(pageSize.value)">
+          <option
+            *ngFor="let size of PAGE_SIZES_LIST"
+            [selected]="productsView().pageSize === size"
+            [value]="size"
+          >
+            {{ size }}
+          </option>
+        </select>
+      </label>
     </div>
   </div>
 </section>

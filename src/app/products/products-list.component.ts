@@ -1,10 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 
 import { ProductsService } from './products.service';
 import { Product } from './product.model';
+import { EPageSize } from './enums/products-list.enum';
+import { PAGE_SIZES_LIST } from './constants/products-list.constants';
 
 @Component({
   selector: 'app-products-list',
@@ -17,7 +25,9 @@ import { Product } from './product.model';
 export class ProductsListComponent {
   private readonly productsService = inject(ProductsService);
 
+  readonly PAGE_SIZES_LIST = PAGE_SIZES_LIST;
   readonly searchQuery = signal('');
+  readonly pageSize = signal(EPageSize.PAGE_SIZE_5);
 
   private readonly productsState$ = this.productsService.getProducts().pipe(
     map((products) => ({ products, error: '' as string })),
@@ -25,21 +35,25 @@ export class ProductsListComponent {
       of({
         products: [] as Product[],
         error: 'No se pudo cargar los productos.',
-      })
-    )
+      }),
+    ),
   );
 
   private readonly productsState = toSignal(this.productsState$, {
     initialValue: { products: [] as Product[], error: '' as string },
   });
 
-  readonly vm = computed(() => {
+  readonly productsView = computed(() => {
     const state = this.productsState();
     const query = this.searchQuery().trim().toLowerCase();
+    const size = this.pageSize();
+    const filtered = query
+      ? state.products.filter((product) => this.matchesQuery(product, query))
+      : state.products;
     return {
-      products: query
-        ? state.products.filter((product) => this.matchesQuery(product, query))
-        : state.products,
+      products: filtered.slice(0, size),
+      total: filtered.length,
+      pageSize: size,
       error: state.error,
     };
   });
@@ -55,6 +69,13 @@ export class ProductsListComponent {
 
   onSearch(value: string): void {
     this.searchQuery.set(value);
+  }
+
+  onPageSizeChange(value: string): void {
+    const nextValue = Number.parseInt(value, 10);
+    if (!Number.isNaN(nextValue)) {
+      this.pageSize.set(nextValue);
+    }
   }
 
   private matchesQuery(product: Product, query: string): boolean {
