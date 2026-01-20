@@ -1,0 +1,66 @@
+<section class="page">
+  <header class="top-bar">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true"></span>
+      <span class="brand-name">BANCO</span>
+    </div>
+  </header>
+
+  <div class="panel">
+    <div class="toolbar">
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Search..."
+        aria-label="Search products"
+      />
+    </div>
+
+    <div class="table">
+      <div class="row header">
+        <div class="cell logo">Logo</div>
+        <div class="cell name">Nombre del producto</div>
+        <div class="cell description">
+          Descripcion
+          <span class="info-icon" aria-hidden="true">i</span>
+        </div>
+        <div class="cell date">
+          Fecha de liberacion
+          <span class="info-icon" aria-hidden="true">i</span>
+        </div>
+        <div class="cell date">
+          Fecha de reestructuracion
+          <span class="info-icon" aria-hidden="true">i</span>
+        </div>
+      </div>
+
+      <ng-container *ngIf="vm$ | async as vm">
+        <div class="row empty" *ngIf="vm.error">
+          <span class="error-message">{{ vm.error }}</span>
+        </div>
+
+        <div class="row" *ngFor="let product of vm.products; trackBy: trackById">
+          <div class="cell logo">
+            <div class="logo-circle">
+              <img
+                *ngIf="product.logo"
+                [src]="product.logo"
+                [alt]="product.name"
+                loading="lazy"
+              />
+              <span *ngIf="!product.logo">{{ getInitials(product.name) }}</span>
+            </div>
+          </div>
+          <div class="cell name">{{ product.name }}</div>
+          <div class="cell description">{{ product.description }}</div>
+          <div class="cell date">{{ product.date_release }}</div>
+          <div class="cell date">{{ product.date_revision }}</div>
+        </div>
+
+        <div class="row empty" *ngIf="!vm.error && vm.products.length === 0">
+          <span class="empty-message">No hay productos para mostrar.</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

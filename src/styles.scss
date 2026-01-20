@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --surface: #f4f6fb;
+  --panel: #ffffff;
+  --text: #1f2432;
+  --muted: #6c7285;
+  --brand: #1c2f57;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  background: var(--surface);
+  color: var(--text);
+}
