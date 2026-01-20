@@ -9,10 +9,13 @@
   <div class="panel">
     <div class="toolbar">
       <input
+        #search
         class="search-input"
-        type="text"
+        type="search"
         placeholder="Search..."
         aria-label="Search products"
+        [value]="searchQuery()"
+        (input)="onSearch(search.value)"
       />
     </div>
 
@@ -34,12 +37,12 @@
         </div>
       </div>
 
-      <ng-container *ngIf="vm$ | async as vm">
-        <div class="row empty" *ngIf="vm.error">
-          <span class="error-message">{{ vm.error }}</span>
+      <ng-container *ngIf="vm() as data">
+        <div class="row empty" *ngIf="data.error">
+          <span class="error-message">{{ data.error }}</span>
         </div>
 
-        <div class="row" *ngFor="let product of vm.products; trackBy: trackById">
+        <div class="row" *ngFor="let product of data.products; trackBy: trackById">
           <div class="cell logo">
             <div class="logo-circle">
               <img
@@ -51,13 +54,14 @@
               <span *ngIf="!product.logo">{{ getInitials(product.name) }}</span>
             </div>
           </div>
+
           <div class="cell name">{{ product.name }}</div>
-          <div class="cell description">{{ product.description }}</div>
+          <div class="cell description">{{ product.description || '—' }}</div>
           <div class="cell date">{{ product.date_release }}</div>
           <div class="cell date">{{ product.date_revision }}</div>
         </div>
 
-        <div class="row empty" *ngIf="!vm.error && vm.products.length === 0">
+        <div class="row empty" *ngIf="!data.error && data.products.length === 0">
           <span class="empty-message">No hay productos para mostrar.</span>
         </div>
       </ng-container>
