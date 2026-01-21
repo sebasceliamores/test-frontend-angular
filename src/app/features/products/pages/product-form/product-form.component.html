@@ -1,6 +1,6 @@
 <section class="page">
   <div class="panel">
-    <h2 class="title">{{ title() }}</h2>
+    <h2 class="title" data-testid="form-title">{{ title() }}</h2>
 
     <form class="form-grid" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="field">
@@ -10,8 +10,8 @@
           type="text"
           maxlength="10"
           formControlName="id"
-          [disabled]="isEdit()"
           [ngClass]="{ invalid: showError(idControl) }"
+          data-testid="field-id"
         />
         <app-form-errors
           *ngIf="!isEdit()"
@@ -28,6 +28,7 @@
           maxlength="100"
           formControlName="name"
           [ngClass]="{ invalid: showError(nameControl) }"
+          data-testid="field-name"
         />
         <app-form-errors
           [control]="nameControl"
@@ -43,6 +44,7 @@
           maxlength="200"
           formControlName="description"
           [ngClass]="{ invalid: showError(descriptionControl) }"
+          data-testid="field-description"
         ></textarea>
         <app-form-errors
           [control]="descriptionControl"
@@ -58,6 +60,7 @@
           maxlength="500"
           formControlName="logo"
           [ngClass]="{ invalid: showError(logoControl) }"
+          data-testid="field-logo"
         />
         <app-form-errors
           [control]="logoControl"
@@ -72,6 +75,7 @@
           type="date"
           formControlName="date_release"
           [ngClass]="{ invalid: showError(dateReleaseControl) }"
+          data-testid="field-date-release"
         />
         <app-form-errors
           [control]="dateReleaseControl"
@@ -87,6 +91,7 @@
           formControlName="date_revision"
           readonly
           [ngClass]="{ invalid: showError(dateRevisionControl) }"
+          data-testid="field-date-revision"
         />
         <app-form-errors
           [control]="dateRevisionControl"
@@ -95,14 +100,30 @@
       </div>
 
       <div class="form-actions">
-        <button class="btn secondary" type="button" (click)="onReset()">Reiniciar</button>
-        <button class="btn primary" type="submit" [disabled]="form.invalid || isSubmitting()">
+        <button
+          class="btn secondary"
+          type="button"
+          (click)="onReset()"
+          data-testid="reset-button"
+        >
+          Reiniciar
+        </button>
+        <button
+          class="btn primary"
+          type="submit"
+          [disabled]="form.invalid || isSubmitting()"
+          data-testid="submit-button"
+        >
           {{ submitLabel() }}
         </button>
       </div>
 
-      <p class="submit-error" *ngIf="submitError()">{{ submitError() }}</p>
-      <p class="submit-error" *ngIf="loadError()">{{ loadError() }}</p>
+      <p class="submit-error" *ngIf="submitError()" data-testid="submit-error">
+        {{ submitError() }}
+      </p>
+      <p class="submit-error" *ngIf="loadError()" data-testid="load-error">
+        {{ loadError() }}
+      </p>
     </form>
   </div>
 </section>
