@@ -1,5 +1,5 @@
 <ng-container *ngIf="shouldShow">
-  <span class="error" *ngFor="let message of errorMessages">
+  <span class="error" *ngFor="let message of errorMessages" data-testid="form-error">
     {{ message }}
   </span>
 </ng-container>
