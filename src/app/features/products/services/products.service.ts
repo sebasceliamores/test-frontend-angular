@@ -23,6 +23,9 @@ export class ProductsService {
         .get<ProductsResponse>(this.productsUrl)
         .pipe(
           map((response) => response.data ?? []),
+          tap({
+            error: () => this.clearProductsCache(),
+          }),
           shareReplay({ bufferSize: 1, refCount: true }),
         );
     }

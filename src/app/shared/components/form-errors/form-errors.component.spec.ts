@@ -83,4 +83,20 @@ describe('FormErrorsComponent', () => {
     const errors = getErrors(fixture);
     expect(errors[0].textContent).toContain('Este campo es requerido!');
   });
+
+  it('shows invalid date message when invalidDate error is set', () => {
+    const fixture = TestBed.createComponent(FormErrorsComponent);
+    const component = fixture.componentInstance;
+    const control = new FormControl('');
+
+    control.setErrors({ invalidDate: true });
+    control.markAsDirty();
+
+    component.control = control;
+    fixture.detectChanges();
+
+    const errors = getErrors(fixture);
+    expect(errors.length).toBe(1);
+    expect(errors[0].textContent).toContain('Fecha invalida');
+  });
 });

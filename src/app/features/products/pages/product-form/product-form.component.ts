@@ -154,7 +154,9 @@ export class ProductFormComponent {
   }
 
   showError(control: AbstractControl): boolean {
-    return control.invalid && (control.touched || this.submitted());
+    return (
+      control.invalid && (control.touched || control.dirty || this.submitted())
+    );
   }
 
   private submitCreate(): void {
