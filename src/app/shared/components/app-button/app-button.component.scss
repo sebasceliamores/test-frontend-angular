@@ -1,0 +1,31 @@
+:host {
+  display: inline-block;
+}
+
+.app-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  border-radius: 8px;
+  border: none;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.app-button--secondary {
+  background: #eef1f7;
+  color: #49506a;
+}
+
+.app-button--primary {
+  background: #f6e28b;
+  color: #4a4f60;
+}
+
+.app-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

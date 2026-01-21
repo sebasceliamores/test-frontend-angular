@@ -19,6 +19,7 @@ import { finalize, map, of, switchMap, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { FormErrorsComponent } from '../../../../shared/components/form-errors/form-errors.component';
+import { AppButtonComponent } from '../../../../shared/components/app-button/app-button.component';
 import {
   minTodayValidator,
   oneYearAfterReleaseValidator,
@@ -34,7 +35,13 @@ import { PRODUCT_FORM_DEFAULT } from '../../constants/product-form.constants';
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [NgClass, NgIf, ReactiveFormsModule, FormErrorsComponent],
+  imports: [
+    NgClass,
+    NgIf,
+    ReactiveFormsModule,
+    FormErrorsComponent,
+    AppButtonComponent,
+  ],
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

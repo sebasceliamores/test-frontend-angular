@@ -78,30 +78,6 @@ input[disabled] {
   margin-top: 8px;
 }
 
-.btn {
-  min-width: 120px;
-  border-radius: 8px;
-  border: none;
-  padding: 10px 18px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn.secondary {
-  background: #eef1f7;
-  color: #49506a;
-}
-
-.btn.primary {
-  background: #f6e28b;
-  color: #4a4f60;
-}
-
-.btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .submit-error {
   grid-column: 1 / -1;
   text-align: center;

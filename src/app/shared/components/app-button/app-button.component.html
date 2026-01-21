@@ -1,0 +1,11 @@
+<button
+  class="app-button"
+  [class.app-button--primary]="variant === 'primary'"
+  [class.app-button--secondary]="variant === 'secondary'"
+  [attr.type]="type"
+  [attr.data-testid]="testId"
+  [disabled]="disabled"
+  (click)="handleClick()"
+>
+  <ng-content></ng-content>
+</button>

@@ -100,22 +100,22 @@
       </div>
 
       <div class="form-actions">
-        <button
-          class="btn secondary"
+        <app-button
+          variant="secondary"
           type="button"
           (click)="onReset()"
           data-testid="reset-button"
         >
           Reiniciar
-        </button>
-        <button
-          class="btn primary"
+        </app-button>
+        <app-button
+          variant="primary"
           type="submit"
           [disabled]="form.invalid || isSubmitting()"
           data-testid="submit-button"
         >
           {{ submitLabel() }}
-        </button>
+        </app-button>
       </div>
 
       <p class="submit-error" *ngIf="submitError()" data-testid="submit-error">

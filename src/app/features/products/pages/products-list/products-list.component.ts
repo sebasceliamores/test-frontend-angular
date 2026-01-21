@@ -9,6 +9,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
+import { AppButtonComponent } from '../../../../shared/components/app-button/app-button.component';
 import { ProductsService } from '../../services/products.service';
 import { PAGE_SIZES_LIST } from '../../constants/products-list.constants';
 import { EPageSize } from '../../enums/products-list.enum';
@@ -17,7 +18,7 @@ import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NgForOf, NgIf, RouterLink],
+  imports: [NgForOf, NgIf, RouterLink, AppButtonComponent],
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

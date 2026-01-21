@@ -10,7 +10,9 @@
         [value]="searchQuery()"
         (input)="onSearch(search.value)"
       />
-      <a class="btn add-btn" routerLink="/products/new">Agregar</a>
+      <app-button variant="primary" link="/products/new">
+        Agregar
+      </app-button>
     </div>
 
     <div class="table">
@@ -66,7 +68,7 @@
           <div class="cell description">
             <span class="cell-text">{{ product.description || '-' }}</span>
           </div>
-          <div class="cell date release-date">
+          <div class="cell date">
             <span class="cell-text">{{ product.date_release }}</span>
           </div>
           <div class="cell date">
