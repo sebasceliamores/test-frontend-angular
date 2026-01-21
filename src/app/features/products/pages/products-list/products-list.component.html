@@ -21,15 +21,29 @@
         <div class="cell name">Nombre del producto</div>
         <div class="cell description">
           Descripcion
-          <span class="info-icon" aria-hidden="true">i</span>
+          <span class="info-icon" aria-label="Descripcion" title="Descripcion">
+            i
+          </span>
         </div>
         <div class="cell date">
           Fecha de liberacion
-          <span class="info-icon" aria-hidden="true">i</span>
+          <span
+            class="info-icon"
+            aria-label="Fecha de liberacion"
+            title="Fecha de liberacion"
+          >
+            i
+          </span>
         </div>
         <div class="cell date">
           Fecha de reestructuracion
-          <span class="info-icon" aria-hidden="true">i</span>
+          <span
+            class="info-icon"
+            aria-label="Fecha de reestructuracion"
+            title="Fecha de reestructuracion"
+          >
+            i
+          </span>
         </div>
         <div class="cell menu"></div>
       </div>
@@ -75,15 +89,29 @@
             <span class="cell-text">{{ product.date_revision }}</span>
           </div>
           <div class="cell menu">
-            <button class="menu-button" type="button" (click)="toggleMenu(product)">
+            <button
+              class="menu-button"
+              type="button"
+              aria-label="Opciones del producto"
+              aria-haspopup="menu"
+              [attr.aria-expanded]="openMenuId() === product.id"
+              [attr.aria-controls]="'menu-' + product.id"
+              (click)="toggleMenu(product)"
+            >
               <span class="menu-dot"></span>
               <span class="menu-dot"></span>
               <span class="menu-dot"></span>
             </button>
-            <div class="menu-dropdown" *ngIf="openMenuId() === product.id">
+            <div
+              class="menu-dropdown"
+              *ngIf="openMenuId() === product.id"
+              [attr.id]="'menu-' + product.id"
+              role="menu"
+            >
               <a
                 class="menu-item"
                 data-testid="menu-edit"
+                role="menuitem"
                 [routerLink]="['/products', product.id, 'edit']"
               >
                 Editar
