@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 import { AppButtonComponent } from '../../../../shared/components/app-button/app-button.component';
@@ -25,6 +25,7 @@ import { Product } from '../../models/product.model';
 })
 export class ProductsListComponent {
   private readonly productsService = inject(ProductsService);
+  private readonly router = inject(Router);
 
   readonly PAGE_SIZES_LIST = PAGE_SIZES_LIST;
   readonly searchQuery = signal('');
@@ -69,7 +70,7 @@ export class ProductsListComponent {
   }
 
   getLogoKey(product: Product): string {
-    return product.id || product.name;
+    return product.id || `${product.name}-${product.date_release}`;
   }
 
   toggleMenu(product: Product): void {
@@ -97,9 +98,13 @@ export class ProductsListComponent {
 
   onPageSizeChange(value: string): void {
     const nextValue = Number.parseInt(value, 10);
-    if (!Number.isNaN(nextValue)) {
+    if (PAGE_SIZES_LIST.includes(nextValue as EPageSize)) {
       this.pageSize.set(nextValue);
     }
+  }
+
+  onAdd(): void {
+    this.router.navigateByUrl('/products/new');
   }
 
   private matchesQuery(product: Product, query: string): boolean {

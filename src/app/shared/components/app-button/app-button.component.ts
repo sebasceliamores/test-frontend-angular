@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -12,20 +11,13 @@ export class AppButtonComponent {
   @Input() variant: 'primary' | 'secondary' = 'primary';
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() disabled = false;
-  @Input() link?: string | any[];
   @Input('data-testid') testId?: string;
+  @Output() clicked = new EventEmitter<MouseEvent>();
 
-  constructor(private readonly router: Router) {}
-
-  handleClick(): void {
-    if (this.disabled || !this.link) {
+  handleClick(event: MouseEvent): void {
+    if (this.disabled) {
       return;
     }
-
-    if (Array.isArray(this.link)) {
-      this.router.navigate(this.link);
-    } else {
-      this.router.navigateByUrl(this.link);
-    }
+    this.clicked.emit(event);
   }
 }

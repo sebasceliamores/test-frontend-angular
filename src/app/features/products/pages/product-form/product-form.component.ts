@@ -30,7 +30,10 @@ import {
   ProductPayload,
   ProductUpdatePayload,
 } from '../../models/product.model';
-import { PRODUCT_FORM_DEFAULT } from '../../constants/product-form.constants';
+import {
+  PRODUCT_FORM_DEFAULT,
+  PRODUCT_FORM_MESSAGES,
+} from '../../constants/product-form.constants';
 
 @Component({
   selector: 'app-product-form',
@@ -155,7 +158,7 @@ export class ProductFormComponent {
   }
 
   private submitCreate(): void {
-    const payload = this.form.getRawValue() as ProductPayload;
+    const payload = this.getFormValue();
     this.isSubmitting.set(true);
     this.productsService
       .createProduct(payload)
@@ -169,7 +172,7 @@ export class ProductFormComponent {
           this.router.navigateByUrl('/');
         },
         error: () => {
-          this.submitError.set('No se pudo registrar el producto.');
+          this.submitError.set(PRODUCT_FORM_MESSAGES.createError);
         },
       });
   }
@@ -177,16 +180,10 @@ export class ProductFormComponent {
   private submitEdit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
-      this.submitError.set('No se encontro el producto.');
+      this.submitError.set(PRODUCT_FORM_MESSAGES.notFoundError);
       return;
     }
-    const payload: ProductUpdatePayload = {
-      name: this.form.controls.name.value,
-      description: this.form.controls.description.value,
-      logo: this.form.controls.logo.value,
-      date_release: this.form.controls.date_release.value,
-      date_revision: this.form.controls.date_revision.value,
-    };
+    const payload = this.getUpdatePayload();
     this.isSubmitting.set(true);
     this.productsService
       .updateProduct(id, payload)
@@ -199,7 +196,7 @@ export class ProductFormComponent {
           this.router.navigateByUrl('/');
         },
         error: () => {
-          this.submitError.set('No se pudo actualizar el producto.');
+          this.submitError.set(PRODUCT_FORM_MESSAGES.updateError);
         },
       });
   }
@@ -226,7 +223,7 @@ export class ProductFormComponent {
           this.syncRevisionDate(product.date_release);
         },
         error: () => {
-          this.loadError.set('No se pudo cargar el producto.');
+          this.loadError.set(PRODUCT_FORM_MESSAGES.loadError);
         },
       });
   }
@@ -257,6 +254,15 @@ export class ProductFormComponent {
         map((result) => (control.value === value ? result : null)),
       );
     };
+  }
+
+  private getFormValue(): ProductPayload {
+    return this.form.getRawValue() as ProductPayload;
+  }
+
+  private getUpdatePayload(): ProductUpdatePayload {
+    const { id, ...payload } = this.getFormValue();
+    return payload;
   }
 
   get idControl(): AbstractControl<string> {

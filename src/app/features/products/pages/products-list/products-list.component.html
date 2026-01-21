@@ -10,7 +10,7 @@
         [value]="searchQuery()"
         (input)="onSearch(search.value)"
       />
-      <app-button variant="primary" link="/products/new">
+      <app-button variant="primary" type="button" (clicked)="onAdd()">
         Agregar
       </app-button>
     </div>
