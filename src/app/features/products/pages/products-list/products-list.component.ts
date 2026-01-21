@@ -61,6 +61,7 @@ export class ProductsListComponent {
   });
 
   readonly logoErrors = signal<Record<string, boolean>>({});
+  readonly openMenuId = signal<string | null>(null);
 
   trackById(index: number, product: Product): string {
     return product.id ?? String(index);
@@ -68,6 +69,11 @@ export class ProductsListComponent {
 
   getLogoKey(product: Product): string {
     return product.id || product.name;
+  }
+
+  toggleMenu(product: Product): void {
+    const key = product.id;
+    this.openMenuId.update((current) => (current === key ? null : key));
   }
 
   hasLogoError(product: Product): boolean {

@@ -1,0 +1,108 @@
+<section class="page">
+  <div class="panel">
+    <h2 class="title">{{ title() }}</h2>
+
+    <form class="form-grid" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="id">ID</label>
+        <input
+          id="id"
+          type="text"
+          maxlength="10"
+          formControlName="id"
+          [disabled]="isEdit()"
+          [ngClass]="{ invalid: showError(idControl) }"
+        />
+        <app-form-errors
+          *ngIf="!isEdit()"
+          [control]="idControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="field">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          maxlength="100"
+          formControlName="name"
+          [ngClass]="{ invalid: showError(nameControl) }"
+        />
+        <app-form-errors
+          [control]="nameControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="field">
+        <label for="description">Descripción</label>
+        <textarea
+          id="description"
+          rows="3"
+          maxlength="200"
+          formControlName="description"
+          [ngClass]="{ invalid: showError(descriptionControl) }"
+        ></textarea>
+        <app-form-errors
+          [control]="descriptionControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="field">
+        <label for="logo">Logo</label>
+        <input
+          id="logo"
+          type="text"
+          maxlength="500"
+          formControlName="logo"
+          [ngClass]="{ invalid: showError(logoControl) }"
+        />
+        <app-form-errors
+          [control]="logoControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="field">
+        <label for="date_release">Fecha Liberación</label>
+        <input
+          id="date_release"
+          type="date"
+          formControlName="date_release"
+          [ngClass]="{ invalid: showError(dateReleaseControl) }"
+        />
+        <app-form-errors
+          [control]="dateReleaseControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="field">
+        <label for="date_revision">Fecha Revisión</label>
+        <input
+          id="date_revision"
+          type="date"
+          formControlName="date_revision"
+          readonly
+          [ngClass]="{ invalid: showError(dateRevisionControl) }"
+        />
+        <app-form-errors
+          [control]="dateRevisionControl"
+          [submitted]="submitted()"
+        ></app-form-errors>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn secondary" type="button" (click)="onReset()">Reiniciar</button>
+        <button class="btn primary" type="submit" [disabled]="form.invalid || isSubmitting()">
+          {{ submitLabel() }}
+        </button>
+      </div>
+
+      <p class="submit-error" *ngIf="submitError()">{{ submitError() }}</p>
+      <p class="submit-error" *ngIf="loadError()">{{ loadError() }}</p>
+    </form>
+  </div>
+</section>

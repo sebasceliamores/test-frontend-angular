@@ -29,6 +29,7 @@
           Fecha de reestructuracion
           <span class="info-icon" aria-hidden="true">i</span>
         </div>
+        <div class="cell menu"></div>
       </div>
 
       <ng-container *ngIf="productsView() as data">
@@ -58,11 +59,23 @@
           <div class="cell description">
             <span class="cell-text">{{ product.description || '-' }}</span>
           </div>
-          <div class="cell date">
+          <div class="cell date release-date">
             <span class="cell-text">{{ product.date_release }}</span>
           </div>
           <div class="cell date">
             <span class="cell-text">{{ product.date_revision }}</span>
+          </div>
+          <div class="cell menu">
+            <button class="menu-button" type="button" (click)="toggleMenu(product)">
+              <span class="menu-dot"></span>
+              <span class="menu-dot"></span>
+              <span class="menu-dot"></span>
+            </button>
+            <div class="menu-dropdown" *ngIf="openMenuId() === product.id">
+              <a class="menu-item" [routerLink]="['/products', product.id, 'edit']">
+                Editar
+              </a>
+            </div>
           </div>
         </div>
 

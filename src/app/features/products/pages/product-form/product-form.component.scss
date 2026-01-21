@@ -55,6 +55,11 @@ textarea:focus {
   border-color: #aab3c9;
 }
 
+input[disabled] {
+  background: #f5f6fb;
+  color: #8b92a8;
+}
+
 .invalid {
   border-color: #d94a4a;
   outline-color: rgba(217, 74, 74, 0.25);
