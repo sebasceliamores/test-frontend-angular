@@ -14,7 +14,7 @@
     </div>
 
     <div class="table">
-      <div class="row header">
+      <div class="row header" data-testid="products-header">
         <div class="cell logo">Logo</div>
         <div class="cell name">Nombre del producto</div>
         <div class="cell description">
@@ -33,11 +33,15 @@
       </div>
 
       <ng-container *ngIf="productsView() as data">
-        <div class="row empty" *ngIf="data.error">
+        <div class="row empty" *ngIf="data.error" data-testid="products-error">
           <span class="error-message">{{ data.error }}</span>
         </div>
 
-        <div class="row" *ngFor="let product of data.products; trackBy: trackById">
+        <div
+          class="row"
+          *ngFor="let product of data.products; trackBy: trackById"
+          data-testid="product-row"
+        >
           <div class="cell logo">
             <div class="logo-circle">
               <img
@@ -47,9 +51,12 @@
                 loading="lazy"
                 (error)="onLogoError(product)"
               />
-              <span *ngIf="!product.logo || hasLogoError(product)">{{
-                getInitials(product.name)
-              }}</span>
+              <span
+                *ngIf="!product.logo || hasLogoError(product)"
+                data-testid="logo-initials"
+              >
+                {{ getInitials(product.name) }}
+              </span>
             </div>
           </div>
 
@@ -72,21 +79,31 @@
               <span class="menu-dot"></span>
             </button>
             <div class="menu-dropdown" *ngIf="openMenuId() === product.id">
-              <a class="menu-item" [routerLink]="['/products', product.id, 'edit']">
+              <a
+                class="menu-item"
+                data-testid="menu-edit"
+                [routerLink]="['/products', product.id, 'edit']"
+              >
                 Editar
               </a>
             </div>
           </div>
         </div>
 
-        <div class="row empty" *ngIf="!data.error && data.products.length === 0">
+        <div
+          class="row empty"
+          *ngIf="!data.error && data.products.length === 0"
+          data-testid="products-empty"
+        >
           <span class="empty-message">No hay productos para mostrar.</span>
         </div>
       </ng-container>
     </div>
 
     <div class="table-footer">
-      <span class="result-count">{{ productsView().shown }} Resultados</span>
+      <span class="result-count" data-testid="result-count">
+        {{ productsView().shown }} Resultados
+      </span>
       <label class="page-size">
         <span class="sr-only">Cantidad de registros</span>
         <select #pageSize (change)="onPageSizeChange(pageSize.value)">
