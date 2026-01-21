@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, map, of, switchMap, timer } from 'rxjs';
+import { catchError, finalize, map, of, switchMap, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { FormErrorsComponent } from '../../../../shared/components/form-errors/form-errors.component';
@@ -252,6 +252,7 @@ export class ProductFormComponent {
       }
       return timer(300).pipe(
         switchMap(() => this.productsService.checkIdExists(value)),
+        catchError(() => of(false)),
         map((exists) => (exists ? { idTaken: true } : null)),
         map((result) => (control.value === value ? result : null)),
       );

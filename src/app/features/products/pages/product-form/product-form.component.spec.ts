@@ -172,4 +172,20 @@ describe('ProductFormComponent', () => {
 
     expect(component.form.controls.id.errors?.['idTaken']).toBe(true);
   }));
+
+  it('ignores id validation errors when checkIdExists fails', fakeAsync(() => {
+    productsService.checkIdExists.mockReturnValue(
+      throwError(() => new Error('fail')),
+    );
+
+    const fixture = TestBed.createComponent(ProductFormComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    component.form.controls.id.setValue('broken-id');
+    tick(300);
+    fixture.detectChanges();
+
+    expect(component.form.controls.id.errors?.['idTaken']).toBeUndefined();
+  }));
 });
