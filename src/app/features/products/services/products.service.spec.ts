@@ -43,6 +43,36 @@ describe('ProductsService', () => {
     ]);
   });
 
+  it('getProducts shares a single request across subscribers', async () => {
+    const products$ = service.getProducts();
+    const promise1 = lastValueFrom(products$);
+    const promise2 = lastValueFrom(products$);
+
+    const reqs = httpMock.match(`${environment.apiUrl}/products`);
+    expect(reqs.length).toBe(1);
+    reqs[0].flush({ data: [createProduct({ id: 'p1' })] });
+
+    const [result1, result2] = await Promise.all([promise1, promise2]);
+    expect(result1).toEqual([expect.objectContaining({ id: 'p1' })]);
+    expect(result2).toEqual([expect.objectContaining({ id: 'p1' })]);
+  });
+
+  it('getProducts retries after an error', async () => {
+    const failedPromise = lastValueFrom(service.getProducts());
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/products`);
+    req.flush('fail', { status: 500, statusText: 'Server Error' });
+
+    await expect(failedPromise).rejects.toBeTruthy();
+
+    const retryPromise = lastValueFrom(service.getProducts());
+    const retryReq = httpMock.expectOne(`${environment.apiUrl}/products`);
+    expect(retryReq.request.method).toBe('GET');
+    retryReq.flush({ data: [] });
+
+    await expect(retryPromise).resolves.toEqual([]);
+  });
+
   it.each([
     ['data null', { data: null }],
     ['empty object', {}],
