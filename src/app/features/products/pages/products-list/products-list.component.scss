@@ -1,6 +1,6 @@
 .panel {
   padding: 20px 20px 24px;
-  max-width: 1100px;
+  max-width: 1290px;
 }
 
 .toolbar {
@@ -15,9 +15,10 @@
   width: 220px;
   padding: 10px 14px;
   border: 1px solid #d7dbe7;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 14px;
   background: #fff;
+  height: 40px;
 }
 
 .search-input:focus {
@@ -25,9 +26,13 @@
   border-color: #aab3c9;
 }
 
+.table-container {
+  background: var(--panel);
+  box-shadow: 0 18px 40px rgba(28, 34, 53, 0.08);
+  padding: 30px 20px;
+}
+
 .table {
-  border: 1px solid #e6e9f2;
-  border-radius: 12px;
   overflow-x: auto;
   background: #fff;
 }
@@ -47,8 +52,9 @@
 .row.header {
   font-weight: 600;
   color: var(--muted);
-  background: #f3f6fd;
+  background: var(--surface);
   border-bottom: 1px solid #e6e9f2;
+  height: 60px;
 }
 
 .row.empty {
@@ -185,11 +191,12 @@
 
 .page-size select {
   border: 1px solid #d7dbe7;
-  border-radius: 8px;
+  border-radius: 3px;
   padding: 6px 10px;
   background: #fff;
   color: var(--text);
   font-size: 13px;
+  width: 60px;
 }
 
 .page-size select:focus {

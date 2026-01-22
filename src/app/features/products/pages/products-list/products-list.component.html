@@ -15,137 +15,149 @@
       </app-button>
     </div>
 
-    <div class="table">
-      <div class="row header" data-testid="products-header">
-        <div class="cell logo">Logo</div>
-        <div class="cell name">Nombre del producto</div>
-        <div class="cell description">
-          Descripcion
-          <span class="info-icon" aria-label="Descripcion" title="Descripcion">
-            i
-          </span>
-        </div>
-        <div class="cell date">
-          Fecha de liberacion
-          <span
-            class="info-icon"
-            aria-label="Fecha de liberacion"
-            title="Fecha de liberacion"
-          >
-            i
-          </span>
-        </div>
-        <div class="cell date">
-          Fecha de reestructuracion
-          <span
-            class="info-icon"
-            aria-label="Fecha de reestructuracion"
-            title="Fecha de reestructuracion"
-          >
-            i
-          </span>
-        </div>
-        <div class="cell menu"></div>
-      </div>
-
-      <ng-container *ngIf="productsView() as data">
-        <div class="row empty" *ngIf="data.error" data-testid="products-error">
-          <span class="error-message">{{ data.error }}</span>
-        </div>
-
-        <div
-          class="row"
-          *ngFor="let product of data.products; trackBy: trackById"
-          data-testid="product-row"
-        >
-          <div class="cell logo">
-            <div class="logo-circle">
-              <img
-                *ngIf="product.logo && !hasLogoError(product)"
-                [src]="product.logo"
-                [alt]="product.name"
-                loading="lazy"
-                (error)="onLogoError(product)"
-              />
-              <span
-                *ngIf="!product.logo || hasLogoError(product)"
-                data-testid="logo-initials"
-              >
-                {{ getInitials(product.name) }}
-              </span>
-            </div>
+    <section class="table-container">
+      <div class="table">
+        <div class="row header" data-testid="products-header">
+          <div class="cell logo">{{ LABELS.logo }}</div>
+          <div class="cell name">{{ LABELS.name }}</div>
+          <div class="cell description">
+            {{ LABELS.description }}
+            <span
+              class="info-icon"
+              [attr.aria-label]="LABELS.description"
+              [title]="LABELS.description"
+            >
+              i
+            </span>
           </div>
+          <div class="cell date">
+            {{ LABELS.releaseDate }}
+            <span
+              class="info-icon"
+              [attr.aria-label]="LABELS.releaseDate"
+              [title]="LABELS.releaseDate"
+            >
+              i
+            </span>
+          </div>
+          <div class="cell date">
+            {{ LABELS.revisionDate }}
+            <span
+              class="info-icon"
+              [attr.aria-label]="LABELS.revisionDate"
+              [title]="LABELS.revisionDate"
+            >
+              i
+            </span>
+          </div>
+          <div class="cell menu"></div>
+        </div>
+
+        <ng-container *ngIf="productsView() as data">
+          <div class="row empty" *ngIf="data.error" data-testid="products-error">
+            <span class="error-message">{{ data.error }}</span>
+          </div>
+
+          <div
+            class="row"
+            *ngFor="let product of data.products; trackBy: trackById"
+            data-testid="product-row"
+          >
+            <div class="cell logo">
+              <div class="logo-circle">
+                <img
+                  *ngIf="product.logo && !hasLogoError(product)"
+                  [src]="product.logo"
+                  [alt]="product.name"
+                  loading="lazy"
+                  (error)="onLogoError(product)"
+                />
+                <span
+                  *ngIf="!product.logo || hasLogoError(product)"
+                  data-testid="logo-initials"
+                >
+                  {{ getInitials(product.name) }}
+                </span>
+              </div>
+            </div>
 
           <div class="cell name">
-            <span class="cell-text">{{ product.name }}</span>
+            <span class="cell-text" [title]="product.name">
+              {{ product.name }}
+            </span>
           </div>
           <div class="cell description">
-            <span class="cell-text">{{ product.description || '-' }}</span>
+            <span class="cell-text" [title]="product.description || '-'">
+              {{ product.description || '-' }}
+            </span>
           </div>
-          <div class="cell date">
-            <span class="cell-text">{{ product.date_release }}</span>
-          </div>
-          <div class="cell date">
-            <span class="cell-text">{{ product.date_revision }}</span>
-          </div>
-          <div class="cell menu">
-            <button
-              class="menu-button"
-              type="button"
-              aria-label="Opciones del producto"
-              aria-haspopup="menu"
-              [attr.aria-expanded]="openMenuId() === product.id"
-              [attr.aria-controls]="'menu-' + product.id"
-              (click)="toggleMenu(product)"
-            >
-              <span class="menu-dot"></span>
-              <span class="menu-dot"></span>
-              <span class="menu-dot"></span>
-            </button>
-            <div
-              class="menu-dropdown"
-              *ngIf="openMenuId() === product.id"
-              [attr.id]="'menu-' + product.id"
-              role="menu"
-            >
-              <a
-                class="menu-item"
-                data-testid="menu-edit"
-                role="menuitem"
-                [routerLink]="['/products', product.id, 'edit']"
+            <div class="cell date">
+              <span class="cell-text">{{ product.date_release }}</span>
+            </div>
+            <div class="cell date">
+              <span class="cell-text">{{ product.date_revision }}</span>
+            </div>
+            <div class="cell menu">
+              <button
+                class="menu-button"
+                type="button"
+                aria-label="Opciones del producto"
+                aria-haspopup="menu"
+                [attr.aria-expanded]="openMenuId() === product.id"
+                [attr.aria-controls]="'menu-' + product.id"
+                (click)="toggleMenu(product)"
               >
-                Editar
-              </a>
+                <span class="menu-dot"></span>
+                <span class="menu-dot"></span>
+                <span class="menu-dot"></span>
+              </button>
+              <div
+                class="menu-dropdown"
+                *ngIf="openMenuId() === product.id"
+                [attr.id]="'menu-' + product.id"
+                role="menu"
+              >
+                <a
+                  class="menu-item"
+                  data-testid="menu-edit"
+                  role="menuitem"
+                  [routerLink]="['/products', product.id, 'edit']"
+                >
+                  Editar
+                </a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div
-          class="row empty"
-          *ngIf="!data.error && data.products.length === 0"
-          data-testid="products-empty"
-        >
-          <span class="empty-message">No hay productos para mostrar.</span>
-        </div>
-      </ng-container>
-    </div>
-
-    <div class="table-footer">
-      <span class="result-count" data-testid="result-count">
-        {{ productsView().shown }} Resultados
-      </span>
-      <label class="page-size">
-        <span class="sr-only">Cantidad de registros</span>
-        <select #pageSize (change)="onPageSizeChange(pageSize.value)">
-          <option
-            *ngFor="let size of PAGE_SIZES_LIST"
-            [selected]="productsView().pageSize === size"
-            [value]="size"
+          <div
+            class="row empty"
+            *ngIf="!data.error && data.products.length === 0"
+            data-testid="products-empty"
           >
+            <span class="empty-message">No hay productos para mostrar.</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="table-footer">
+        <span class="result-count" data-testid="result-count">
+          {{ productsView().shown }} Resultados
+        </span>
+        <label class="page-size">
+          <span class="sr-only">Cantidad de registros</span>
+        <select
+          #pageSizeSelect
+          [value]="pageSize()"
+          (input)="onPageSizeChange(pageSizeSelect.value)"
+        >
+          <option *ngFor="let size of PAGE_SIZES_LIST" [value]="size">
             {{ size }}
           </option>
         </select>
-      </label>
-    </div>
+        </label>
+      </div>
+    </section>
+
   </div>
 </section>
+

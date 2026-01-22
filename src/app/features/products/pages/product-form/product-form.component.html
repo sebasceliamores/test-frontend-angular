@@ -2,6 +2,8 @@
   <div class="panel">
     <h2 class="title" data-testid="form-title">{{ title() }}</h2>
 
+    <div class="line-divider"></div>
+
     <form class="form-grid" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="field">
         <label for="id">ID</label>
@@ -38,14 +40,14 @@
 
       <div class="field">
         <label for="description">Descripción</label>
-        <textarea
+        <input
           id="description"
-          rows="3"
+          type="text"
           maxlength="200"
           formControlName="description"
           [ngClass]="{ invalid: showError(descriptionControl) }"
           data-testid="field-description"
-        ></textarea>
+        />
         <app-form-errors
           [control]="descriptionControl"
           [submitted]="submitted()"
@@ -111,10 +113,10 @@
         <app-button
           variant="primary"
           type="submit"
-          [disabled]="form.invalid || isSubmitting()"
+          [disabled]="form.invalid"
           data-testid="submit-button"
         >
-          {{ submitLabel() }}
+          Enviar
         </app-button>
       </div>
 

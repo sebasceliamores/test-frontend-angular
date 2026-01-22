@@ -11,7 +11,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 import { AppButtonComponent } from '../../../../shared/components/app-button/app-button.component';
 import { ProductsService } from '../../services/products.service';
-import { PAGE_SIZES_LIST } from '../../constants/products-list.constants';
+import {
+  PAGE_SIZES_LIST,
+  PRODUCTS_LIST_LABELS,
+} from '../../constants/products-list.constants';
 import { EPageSize } from '../../enums/products-list.enum';
 import { Product } from '../../models/product.model';
 
@@ -28,6 +31,7 @@ export class ProductsListComponent {
   private readonly router = inject(Router);
 
   readonly PAGE_SIZES_LIST = PAGE_SIZES_LIST;
+  readonly LABELS = PRODUCTS_LIST_LABELS;
   readonly searchQuery = signal('');
   readonly pageSize = signal(EPageSize.PAGE_SIZE_5);
 

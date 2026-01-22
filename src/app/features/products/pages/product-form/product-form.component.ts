@@ -64,7 +64,6 @@ export class ProductFormComponent {
   readonly title = computed(() =>
     this.isEdit() ? 'Formulario de Edición' : 'Formulario de Registro',
   );
-  readonly submitLabel = computed(() => (this.isEdit() ? 'Guardar' : 'Enviar'));
 
   readonly form = this.formBuilder.group({
     id: this.formBuilder.control(PRODUCT_FORM_DEFAULT.id, {
@@ -222,7 +221,10 @@ export class ProductFormComponent {
             date_revision: product.date_revision,
           });
           this.initialValue.set({ ...product });
-          this.syncRevisionDate(product.date_release);
+
+          if (this.form.controls.date_release.invalid) {
+            this.form.controls.date_release.markAsTouched();
+          }
         },
         error: () => {
           this.loadError.set(PRODUCT_FORM_MESSAGES.loadError);
